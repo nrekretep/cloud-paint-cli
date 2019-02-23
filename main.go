@@ -1,10 +1,10 @@
 package main
 
 import (
-	"encoding/json"
 	"flag"
 	"fmt"
 	"github.com/nrekretep/cloudpaint/adapter/cloudfoundry"
+	"github.com/nrekretep/cloudpaint/services"
 )
 
 func main() {
@@ -31,16 +31,10 @@ func main() {
 	err = cc.GetQuotaDefinitions()
 	err = cc.GetOrganizations()
 	err = cc.GetSpaces()
-	appInfo, err := cc.GetAppInfo("4d49fc09-3b8c-408c-903d-4ca0e4abd43a")
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
-	data, err := json.Marshal(appInfo)
-	if err != nil {
-		fmt.Println(err)
-	} else {
-		fmt.Println("--------\n", string(data))
-	}
+	err = cc.GetApps()
+
+	createDiagramService := services.NewCreateDiagramService(cc)
+
+	fmt.Println(createDiagramService.RenderTemplate())
 
 }
