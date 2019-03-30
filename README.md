@@ -54,6 +54,10 @@ $ cd $GOPATH/src/github.com/nrekretep
 $ ./cldpnt -a=https://api.run.pivotal.io -u=<youruser> -p=<yourpassword> -d=single-app -appguid=<yourappguid>
 ```
 
+The diagram in [PlantUML Syntax](http://www.plantuml.com/) will be printed to the console. 
+
+To render the diagram you need to send the output to a PlantUML rendering service like [PlanUML Online](http://www.plantuml.com/plantuml/uml/).
+
 ## Supported diagram types
 
 * single-app - Shows all dependencies for a single app.
