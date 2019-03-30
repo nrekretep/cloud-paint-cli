@@ -3,7 +3,6 @@ package main
 import (
 	"flag"
 	"fmt"
-	"github.com/nrekretep/cloudpaint/adapter/cloudfoundry"
 	"github.com/nrekretep/cloudpaint/services"
 )
 
@@ -11,30 +10,22 @@ func main() {
 
 	usernameFlag := flag.String("u", "", "Username used for Cloudfoundry login.")
 	passwordFlag := flag.String("p", "", "Password used for Cloudfoundry login.")
+	diagramFlag := flag.String("d", "", "Name of the diagram to paint.")
+	apiFlag := flag.String("a", "", "URL of the Cloud Controller API.")
+	appGUIDFlag := flag.String("appguid", "", "Single app guid.")
 	flag.Parse()
 
-	if *usernameFlag == "" || *passwordFlag == "" {
+	if *usernameFlag == "" || *passwordFlag == "" || *diagramFlag == "" || *apiFlag == "" {
 		fmt.Println("Please use -h flag for correct usage.")
 		return
 	}
 
-	cc := cloudfoundry.NewCloudController("https://api.run.pivotal.io")
+	config := services.Config{Usename: *usernameFlag, Password: *passwordFlag, ApiUrl: *apiFlag}
 
-	err := cc.Login(*usernameFlag, *passwordFlag)
-	if err != nil {
-		fmt.Println(err)
-		return
+	if *diagramFlag == "single-app" {
+		diagramService, _ := services.NewSingleAppDiagramService(&config)
+		rawDiagram, _ := diagramService.GetRawDiagram(*appGUIDFlag)
+		fmt.Println(rawDiagram)
 	}
-
-	err = cc.GetStacks()
-	err = cc.GetBuildpacks()
-	err = cc.GetQuotaDefinitions()
-	err = cc.GetOrganizations()
-	err = cc.GetSpaces()
-	err = cc.GetApps()
-
-	createDiagramService := services.NewCreateDiagramService(cc)
-
-	fmt.Println(createDiagramService.RenderTemplate())
 
 }
