@@ -2,6 +2,8 @@
 
 This is the command line interface (cli) for the [cloudpaint library](https://github.com/nrekretep/cloudpaint).
 
+This project only exists because I wanted to learn the go programming language. And because I am also a big fan of big picture diagrams for software I created cloudpaint and cloudpaint-cli.
+
 ## Get cloudpaint library
 
 ```bash
@@ -54,4 +56,6 @@ $ ./cldpnt -a=https://api.run.pivotal.io -u=<youruser> -p=<yourpassword> -d=sing
 
 ## Supported diagram types
 
-* single-app - Shows all dependencies for a single app. 
+* single-app - Shows all dependencies for a single app.
+
+![](docs/images/simple-app-diagram.png)
